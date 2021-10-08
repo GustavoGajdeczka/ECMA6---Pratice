@@ -1,37 +1,44 @@
-// Variaveis com escopo de bloco ///////////////////////////////////////////////////
-// variáveis e constantes  com escopo de bloco sem 'hoisting'
+// Variaveis com escopo no bloco ///////////////////////////////////////////////////
+// bloco é tudo que se encontra dentro de {chaves}, geralmente dentro de condições if, switch e loops for e while 
+// let, const = existem apenas no escopo do bloco
+// var        = existe apenas no escopo do bloco da função, ou globalmente se declaradas fora da função
+// dessa forma as variaveis perdem o 'hoisting' que é quando a variavel pode ser chamada mesmo antes de ser declarada
 ////////////////////////////////////////////////////////////////////////////////////
 // ECMA6 ///////////////////////////////////////////////////////////////////////////
-for (let i = 0; i < a.length; i++){
-    let x = a[i]
+// EX 1:
+function veiculo(){
+    if(true){
+        var veiculo1 = 'moto';        //existe apenas no escopo do bloco da função
+        const veiculo2 = 'carro';     //existe apenas no escopo do bloco
+        let veiculo3 = 'barco';        //existe apenas no escopo do bloco
+    }
+    console.log(veiculo1); // 'moto'
+    console.log(veiculo2); // erro: veiculo2 is not defined
+    console.log(veiculo3); // erro: veiculo3 is not defined
 }
-for (let i = 0; i < b.length; i++){
-    let y = b[i]
+// EX 2:
+function simplesVar(){
+    a = 5
+    var a = a * 2 // 'hoisted ou içado'
+    return a // resultado = 10 // isso ocorre pois o var permite que a variavel seja 'içada' e possa ser utilizada mesmo antes de sua declaração
 }
-let callbacks = []
-for (let i = 0; i <= 2; i++){
-    callbacks[i] = function (){ return i * 2 }
-}
-callbacks[0]() === 0
-callbacks[1]() === 2
-callbacks[2]() === 4
-////////////////////////////////////////////////////////////////////////////////////
-// ECMA5 ///////////////////////////////////////////////////////////////////////////
-var i, x, y
-for (i = 0; i < a.length; i++) {
-    x = a[i]
-}
-for (i = 0; i < b.length; i++) {
-    y = b[i]
+function simplesLet(){
+    a = 5 // <== ReferenceError: a is not defined // isso ocorre pois tanto o let quanto o const criam uma sombra na variavel, não permitindo que ela seja usada antes de ser declarada
+    let a = a * 2
+    return a
 }
 
-var callbacks = []
-for (var i = 0; i <= 2; i++) {
-    (function (i) {
-        callbacks[i] = function() { return i * 2 }
-    })(i);
+////////////////////////////////////////////////////////////////////////////////////
+// ECMA5 ///////////////////////////////////////////////////////////////////////////
+function veiculo(){
+    if(true){
+        veiculo1 = 'moto';        
+        veiculo2 = 'carro';     
+        veiculo3 = 'barco';        
+    }
+    console.log(veiculo1); // 'moto'
+    console.log(veiculo2); // 'carro'
+    console.log(veiculo3); // 'barco'
 }
-callbacks[0]() === 0
-callbacks[1]() === 2
-callbacks[2]() === 4
 /////////////////////////////////////////////////////////////////////////////////////
+
